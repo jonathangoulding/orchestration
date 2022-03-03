@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
-    "test": "echo \"No plant api tests\""
+    "test": "echo \"No plant api tests\"",
+    "coverage": "echo \"No plant api coverage\""
   },
   "keywords": [],
   "author": "",

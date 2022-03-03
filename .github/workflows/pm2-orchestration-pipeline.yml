@@ -7,48 +7,23 @@ on:
     branches: [ main ]
 
 jobs:
-  test-basket-api:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          cache: 'npm'
-          cache-dependency-path: 'basket-api/package-lock.json'
-      - name: Run tests
-        working-directory: ./basket-api
-        run: |
-          npm ci
-          npm run test
-
-  test-plant-api:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          cache: 'npm'
-          cache-dependency-path: 'plant-api/package-lock.json'
-      - name: Run tests
-        working-directory: ./plant-api
-        run: |
-          npm ci
-          npm run test
-
   test-orchestration:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
+        app: [ 'basket-api', 'plant-api' ]
+    name: Orchestration Test - ${{ matrix.app }} - Node.js ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: plant-api/package-lock.json
-      - name: Run Orchestrated tests
+          cache-dependency-path: '${{ matrix.app }}/package-lock.json'
+      - name: Run tests
         run: |
           sh orchestration/pm2/start.sh
           sleep 30
-          sh test/basket-test.sh
+          sh test/${{ matrix.app }}-test.sh
           sh orchestration/pm2/stop.sh

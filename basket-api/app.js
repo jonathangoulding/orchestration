@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
-const plantAPIPath = process.env.PLANT_API_APTH || 'http://localhost:3001/plant'
+const plantAPIPath = process.env.PLANT_API_PATH || 'http://localhost:3001/plant'
 const axios = require('axios')
 
 const buildBasket = async () => {

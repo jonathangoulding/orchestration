@@ -46,9 +46,12 @@ jobs:
           node-version: '16'
           cache: 'npm'
           cache-dependency-path: plant-api/package-lock.json
-      - run: sh orchestration/pm2/start.sh
-      - run: sh test/basket-test.sh
-      - run: sh orchestration/pm2/stop.sh
+      - name: Run Orchestrated tests
+        run: |
+          sh orchestration/pm2/start.sh
+          sleep 30
+          sh test/basket-test.sh
+          sh orchestration/pm2/stop.sh
 
   deploy:
     runs-on: ubuntu-latest

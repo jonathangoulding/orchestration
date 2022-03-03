@@ -2,12 +2,12 @@ version: "3"
 services:
   plant-api:
     container_name: plant-api
-    image: ${REGISTRY}/plant-api:main
+    image: ${REGISTRY}/plant-api:${TAG}
     ports:
       - "3001:3001"
   basket-api:
     container_name: basket-api
-    image: ${REGISTRY}/basket-api:main
+    image: ${REGISTRY}/basket-api:${TAG}
     ports:
       - "3000:3000"
     environment:

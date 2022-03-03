@@ -1,0 +1,54 @@
+name: CI PM2 Orchestration Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-basket-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: 'basket-api/package-lock.json'
+      - name: Run tests
+        working-directory: ./basket-api
+        run: |
+          npm ci
+          npm run test
+
+  test-plant-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: 'plant-api/package-lock.json'
+      - name: Run tests
+        working-directory: ./plant-api
+        run: |
+          npm ci
+          npm run test
+
+  test-orchestration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: plant-api/package-lock.json
+      - name: Run Orchestrated tests
+        run: |
+          sh orchestration/pm2/start.sh
+          sleep 30
+          sh test/basket-test.sh
+          sh orchestration/pm2/stop.sh

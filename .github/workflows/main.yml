@@ -1,0 +1,61 @@
+name: CI / CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-basket-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: 'basket-api/package-lock.json'
+      - name: Run tests
+        working-directory: ./basket-api
+        run: |
+          npm ci
+          npm run test
+
+  test-plant-api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: 'plant-api/package-lock.json'
+      - name: Run tests
+        working-directory: ./plant-api
+        run: |
+          npm ci
+          npm run test
+
+  test-orchestration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: plant-api/package-lock.json
+      - run: sh orchestration/pm2/start.sh
+      - run: sh test/basket-test.sh
+      - run: sh orchestration/pm2/stop.sh
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [test-basket-api, test-plant-api, test-orchestration]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: echo "Deployer"

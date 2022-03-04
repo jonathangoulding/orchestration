@@ -2,6 +2,6 @@
 
 cd "$(dirname "$0")" || exit
 
-source ./shared.sh
+. shared.sh
 
 docker-compose up -d

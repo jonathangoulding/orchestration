@@ -62,6 +62,7 @@ jobs:
         run: |
           echo ${{ env.BRANCH }}
           bash orchestration/docker/start.sh ${{ env.BRANCH }}
+          docker ps
           sleep 30
           sh test/plant-api-test.sh
           sh test/basket-api-test.sh

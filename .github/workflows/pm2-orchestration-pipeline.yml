@@ -2,7 +2,7 @@ name: CI PM2 Orchestration Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: ['**']
   pull_request:
     branches: [ main ]
 
@@ -25,5 +25,7 @@ jobs:
         run: |
           sh orchestration/pm2/start.sh
           sleep 30
-          sh test/${{ matrix.app }}-test.sh
+          cd test
+          npm run test:${{ matrix.app }}
+          cd ..
           sh orchestration/pm2/stop.sh

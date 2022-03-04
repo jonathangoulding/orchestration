@@ -4,4 +4,4 @@ cd "$(dirname "$0")" || exit
 
 source ./shared.sh
 
-docker-compose up -d
+docker-compose down

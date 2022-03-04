@@ -1,0 +1,14 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test:plant-api && npm run test:basket-api",
+    "test:basket-api": "echo \"Running Basket Api tests\"\ncurl -H \"Accept: application/json\" \"http://localhost:3000/basket\"",
+    "test:plant-api": "echo \"Running Plant Api tests\"\ncurl -H \"Accept: application/json\" \"http://localhost:3001/plant\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

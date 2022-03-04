@@ -61,7 +61,7 @@ jobs:
       - name: Run orchestration test
         run: |
           echo ${{ env.BRANCH }}
-          bash orchestration/docker/start.sh ${{ env.BRANCH }}
+          sh orchestration/docker/start.sh ${{ env.BRANCH }}
           docker ps
           sleep 30
           sh test/plant-api-test.sh

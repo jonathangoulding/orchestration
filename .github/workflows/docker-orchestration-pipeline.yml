@@ -7,11 +7,12 @@ name: Build Test Orchestrae Docker Containers
 
 on:
   push:
-    branches: ['main']
+    branches: ['**']
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  BRANCH: ${GITHUB_REF##*/}
 
 jobs:
   build-and-push-image:
@@ -59,7 +60,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Run orchestration test
         run: |
-          sh orchestration/docker/start.sh
+          echo ${{ env.BRANCH }}
+          sh orchestration/docker/start.sh ${{ env.BRANCH }}
+          docker ps
           sleep 30
           sh test/plant-api-test.sh
           sh test/basket-api-test.sh

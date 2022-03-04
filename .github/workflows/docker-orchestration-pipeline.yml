@@ -7,7 +7,7 @@ name: Build Test Orchestrae Docker Containers
 
 on:
   push:
-    branches: ['main']
+    branches: ['**']
 
 env:
   REGISTRY: ghcr.io

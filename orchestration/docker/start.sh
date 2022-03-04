@@ -3,7 +3,16 @@
 cd "$(dirname "$0")" || exit
 
 export REGISTRY="ghcr.io/jonathangoulding/orchestration"
-# Default to main - will switch depending on branch
-export TAG="main"
+export DEFAULT_TAG="main"
+export TAG="${1:-$DEFAULT_TAG}"
+
+function GET_TAG() {
+  # Check Tag exists if not default to default tag
+  docker manifest inspect "$REGISTRY/$1:$TAG" > /dev/null \
+  && echo $TAG || echo $DEFAULT_TAG
+}
+
+export BASKET_API_TAG=$(GET_TAG "basket-api")
+export PLANT_API_TAG=$(GET_TAG "plant-api")
 
 docker-compose up -d

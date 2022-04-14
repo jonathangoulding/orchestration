@@ -20,9 +20,9 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: '${{ matrix.app }}/package-lock.json'
+          cache-dependency-path: './applications/${{ matrix.app }}/package-lock.json'
       - name: Run tests
-        working-directory: ./${{ matrix.app }}
+        working-directory: ./applications/${{ matrix.app }}
         run: |
           npm ci
           npm run test
@@ -40,9 +40,9 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: '${{ matrix.app }}/package-lock.json'
+          cache-dependency-path: './applications/${{ matrix.app }}/package-lock.json'
       - name: Run npm audit
-        working-directory: ./${{ matrix.app }}
+        working-directory: ./applications/${{ matrix.app }}
         run: |
           npm ci
           npm audit
@@ -60,9 +60,9 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: '${{ matrix.app }}/package-lock.json'
+          cache-dependency-path: './applications/${{ matrix.app }}/package-lock.json'
       - name: Run coverage
-        working-directory: ./${{ matrix.app }}
+        working-directory: ./applications/${{ matrix.app }}
         run: |
           npm ci
           npm run coverage

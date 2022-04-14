@@ -20,12 +20,12 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: '${{ matrix.app }}/package-lock.json'
+          cache-dependency-path: './applications/${{ matrix.app }}/package-lock.json'
       - name: Run tests
         run: |
           sh orchestration/pm2/start.sh
           sleep 30
-          cd test
+          cd test/system-tests
           npm run test:${{ matrix.app }}
-          cd ..
+          cd ../../
           sh orchestration/pm2/stop.sh

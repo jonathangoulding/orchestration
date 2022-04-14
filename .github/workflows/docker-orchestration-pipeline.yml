@@ -64,5 +64,5 @@ jobs:
           sh orchestration/docker/start.sh ${{ env.BRANCH }}
           docker ps
           sleep 30
-          cd test
+          cd test/systems-tests
           npm test

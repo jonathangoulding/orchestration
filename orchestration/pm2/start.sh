@@ -10,7 +10,7 @@ cd applications/basket-api || exit
 
 npm ci
 
-pm2 start app.js --name basket-api
+pm2 start src/index.js --name basket-api
 
 cd ../../
 
@@ -18,4 +18,4 @@ cd applications/plant-api || exit
 
 npm ci
 
-pm2 start app.js --name plant-api
+pm2 start src/index.js --name plant-api

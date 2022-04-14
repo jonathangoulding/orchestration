@@ -6,15 +6,15 @@ cd "$(dirname "$0")" || exit
 
 cd ../../
 
-cd basket-api || exit
+cd applications/basket-api || exit
 
 npm ci
 
 pm2 start app.js --name basket-api
 
-cd ..
+cd ../../
 
-cd plant-api || exit
+cd applications/plant-api || exit
 
 npm ci
 
